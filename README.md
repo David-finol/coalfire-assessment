@@ -29,9 +29,11 @@ This repository contains a production-ready Infrastructure-as-Code (IaC) solutio
 - [Outputs](#outputs)
 - [CI/CD Pipeline](#cicd-pipeline)
 - [Troubleshooting](#troubleshooting)
+- [Operational Analysis](#operational-analysis)
 - [Best Practices](#best-practices-implemented)
 - [Cost Estimation](#cost-estimation)
 - [Notes and Commentary](#notes-and-commentary)
+- [References](#references)
 
 ## Architecture Overview
 
@@ -480,6 +482,44 @@ Solution: Check security group allows your IP in management_access_cidrs
 ```bash
 Solution: Check ASG instance logs and security group rules
 ```
+
+## Operational Analysis
+
+As the responsible SRE for this infrastructure, a comprehensive analysis has been conducted to identify security gaps, availability issues, cost optimization opportunities, and operational shortcomings.
+
+**Key Findings**:
+
+### Security Gaps
+- Missing HTTPS/TLS encryption on ALB
+- Limited SSH key management and rotation
+- No WAF or DDoS protection
+- No VPC Flow Logs or CloudTrail auditing
+- Overly permissive security group rules
+
+### Availability Issues
+- Management instance has no redundancy (single AZ)
+- Basic health checks without application-specific validation
+- Single region deployment with no disaster recovery
+- No backup strategy for critical components
+
+### Cost Optimization
+- On-demand instances instead of Spot/Reserved
+- NAT Gateway costs could be optimized
+- No S3 lifecycle policies for state backups
+- No right-sizing analysis
+
+### Operational Shortcomings
+- No CloudWatch monitoring or dashboards
+- No centralized logging
+- Limited runbook documentation
+- No incident response procedures
+
+**Improvement Plan**: The assessment includes a prioritized improvement plan with 2 implemented security and monitoring enhancements:
+
+1. **Enhanced Security Groups** - Implements least-privilege access patterns
+2. **CloudWatch Monitoring** - Adds comprehensive observability and alerting
+
+For complete analysis, runbooks, and recovery procedures, see [OPERATIONAL_ANALYSIS.md](docs/OPERATIONAL_ANALYSIS.md)
 
 ## Cost Estimation
 
