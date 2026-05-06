@@ -12,7 +12,7 @@ terraform {
     bucket         = "coalfire-terraform-state-510674264237"
     key            = "coalfire/terraform.tfstate"
     region         = "us-east-1"
-    use_lockfile   = true
+    dynamodb_table = "coalfire-terraform-locks"
     encrypt        = true
   }
 }
