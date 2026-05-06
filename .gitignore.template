@@ -1,0 +1,76 @@
+# .gitignore template
+
+# Terraform files
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+!terraform.tfvars.example
+.terraform/
+.terraform.lock.hcl
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+.env.local
+
+# AWS specific
+*.pem
+*.key
+!example.pem
+aws-credentials
+
+# Project artifacts
+dist/
+build/
+*.egg-info/
+.tox/
+.coverage
+htmlcov/
+
+# Logs
+*.log
+logs/
+
+# Dependencies
+node_modules/
+vendor/
+venv/
+env/
+
+# Local overrides
+terraform/environments/*/terraform.tfvars
+!terraform/environments/*/terraform.tfvars.example
+
+# Outputs
+outputs.json
+tfplan
+.terraform.lock.hcl
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+~*
