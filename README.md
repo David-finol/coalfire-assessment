@@ -1,6 +1,6 @@
 # Coalfire SRE Assessment - AWS Infrastructure
 
-## AWS Infrastructure
+## AWS Infrastructure plan
 
 ## Overview
 
