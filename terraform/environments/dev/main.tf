@@ -8,14 +8,13 @@ terraform {
     }
   }
 
-  # Uncomment after creating state backend
-  # backend "s3" {
-  #   bucket         = "coalfire-terraform-state-510674264237"
-  #   key            = "coalfire/terraform.tfstate"
-  #   region         = "us-east-1"
-  #   dynamodb_table = "coalfire-terraform-locks"
-  #   encrypt        = true
-  # }
+  backend "s3" {
+    bucket         = "coalfire-terraform-state-510674264237"
+    key            = "coalfire/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "coalfire-terraform-locks"
+    encrypt        = true
+  }
 }
 
 provider "aws" {
