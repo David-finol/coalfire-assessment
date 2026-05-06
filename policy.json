@@ -11,7 +11,7 @@
         "s3:*",
         "dynamodb:*",
         "vpc:*",
-        "logs:*"
+        "kms:*"
       ],
       "Resource": "*"
     }
