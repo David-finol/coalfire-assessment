@@ -1,6 +1,6 @@
 # Coalfire SRE Assessment - AWS Infrastructure
 
-![AWS Infrastructure Diagram](docs/architecture-diagram.png)
+## AWS Infrastructure
 
 ## Overview
 
