@@ -335,6 +335,35 @@ aws dynamodb describe-table \
 
 ---
 
+### Optional Step 6: Deploy Using GitHub Actions (OIDC)
+
+This repository includes a GitHub Actions pipeline using **OIDC authentication** so the infrastructure can be deployed from GitHub without long-lived AWS credentials.
+
+**Requirements**:
+- A GitHub repository secret named `AWS_ROLE_ARN` containing the IAM role ARN
+- A GitHub repository secret named `AWS_REGION` set to `us-east-1`
+- A GitHub OIDC trust relationship configured on the AWS role
+
+**How it works**:
+- On push to `main`, the pipeline runs `terraform init`, `terraform validate`, `terraform plan`, and `terraform apply`
+- The pipeline authenticates to AWS via OIDC and assumes the role specified in `AWS_ROLE_ARN`
+- This avoids storing AWS access keys in GitHub secrets
+
+**Use this option when**:
+- you want automated deployment from GitHub
+- you want pull-request validation and CI gating
+- you want the deploy process to use OIDC instead of local AWS credentials
+
+**Deploy with GitHub Actions**:
+1. Push your changes to the repository
+2. Open the Actions tab in GitHub
+3. Verify the `Terraform CI/CD` workflow runs successfully
+4. Confirm the plan and apply steps complete
+
+**Note**: This is an alternative path to local CLI deploy; the main path still works with local credentials and `terraform apply`.
+
+---
+
 ## Design Decisions
 
 ### 1. **Multi-AZ Deployment for High Availability**
@@ -410,12 +439,6 @@ Assumes NAT Gateway provides egress for instance updates, CloudWatch metrics, an
 - [Terraform Module Development](https://www.terraform.io/docs/modules/development/)
 - [Terraform State Management](https://www.terraform.io/docs/state/)
 
-### AWS Services
-- [VPC and Subnets](https://docs.aws.amazon.com/vpc/latest/userguide/)
-- [Application Load Balancer](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/)
-- [Auto Scaling Groups](https://docs.aws.amazon.com/autoscaling/ec2/userguide/)
-- [Security Groups](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html)
-- [EC2 Best Practices](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-best-practices.html)
 
 ### Best Practices
 - [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/)
