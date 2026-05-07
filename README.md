@@ -129,11 +129,6 @@ aws configure
 
 **IMPORTANT**: Do this BEFORE deploying infrastructure. The key pair name must match `terraform.tfvars`.
 
-**Why this order matters:**
-- AWS EC2 instances require a key pair at launch time
-- You CANNOT add a key pair to an existing EC2 instance
-- If you lose the private key (.pem file), you lose SSH access forever
-
 ```bash
 # Create the key pair in AWS
 aws ec2 create-key-pair \
@@ -154,51 +149,7 @@ aws ec2 describe-key-pairs --key-names coalfire-assessment --region us-east-1
 
 **IMPORTANT**: Save this file securely! You cannot recover it if lost. You'll need it to SSH to the management instance.
 
-**Note**: There is NO OTHER WAY to create key pairs. AWS requires key pairs to exist before EC2 instances are launched. Terraform cannot create key pairs for you - it can only reference existing ones.
-
 ---
-
-## Why This Deployment Order is Critical
-
-### AWS EC2 Key Pair Rules (Non-Negotiable)
-
-1. **Key pairs MUST exist BEFORE EC2 instances are launched**
-   - AWS doesn't allow adding key pairs to running instances
-   - This is an AWS security requirement
-
-2. **Terraform CANNOT create key pairs**
-   - Terraform can only reference existing key pairs by name
-   - The `aws_key_pair` resource in Terraform is for importing existing keys, not creating new ones
-
-3. **Private key (.pem file) is your ONLY access method**
-   - If lost, you lose SSH access forever
-   - No recovery possible from AWS console
-
-### Our Approach is Correct
-
-**What we do (RIGHT):**
-```
-1. Create key pair via AWS CLI → coalfire-assessment.pem saved
-2. Deploy Terraform → References existing key pair by name
-3. SSH access works → Uses saved .pem file
-```
-
-**What doesn't work (WRONG):**
-```
-1. Deploy EC2 without key pair
-2. Try to add key pair later → IMPOSSIBLE
-3. Lose access forever → NO RECOVERY
-```
-
-### For Team Collaboration
-
-When multiple people work on this project:
-- **Everyone uses the SAME key pair name** (`coalfire-assessment`)
-- **Everyone creates their OWN .pem file** (Step 0a)
-- **Terraform references the name only** (not the file)
-- **Each person has their own SSH access**
-
-This is the ONLY secure way to handle EC2 key pairs in AWS.
 
 ## Deployment Instructions
 
